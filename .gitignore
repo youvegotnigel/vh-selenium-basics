@@ -1,0 +1,44 @@
+# Compiled class files
+target/
+
+# Logs
+logs/
+
+# Reports
+allure-results/
+allure-report/
+allure-reports/
+
+# Maven build artifacts
+*.log
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata
+.cache/
+.Libs/
+
+# IntelliJ IDEA project files
+*.iml
+*.ipr
+*.iws
+*.idea/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# TestNG
+test-output/
+
+# Other
+testdata/
+reports/
+screenshots/
