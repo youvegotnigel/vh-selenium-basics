@@ -10,9 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
@@ -24,7 +22,7 @@ public class WaitTest {
     private By loadingIndicator = By.id("loading");
 
 
-    @BeforeClass
+    @BeforeMethod
     public void setup() {
 
         WebDriverManager.chromedriver().setup();
@@ -41,8 +39,7 @@ public class WaitTest {
     public void test1() {
 
         try {
-            System.out.println("Waiting for 5 seconds using Thread.sleep()");
-            Thread.sleep(4000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +50,7 @@ public class WaitTest {
     @Test
     public void test2() {
 
-        driver.navigate().to("https://google.com/");
+        //driver.navigate().to("https://google.com/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 
         Assert.assertEquals(driver.findElement(finish).getText().trim(), "Hello World!");
@@ -93,7 +90,7 @@ public class WaitTest {
         System.out.println(stopwatch);
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() {
         driver.quit();
     }
