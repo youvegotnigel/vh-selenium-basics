@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Select Element Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      p {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      select {
+        font-size: 16px;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        color: #333;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      select:focus {
+        outline: none;
+        border-color: #6c9;
+        box-shadow: 0 0 8px rgba(102, 153, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Select Element Example</h1>
+    <p>Please select an option:</p>
+    <select name="selectomatic">
+      <option selected="selected" id="non_multi_option" value="one">One</option>
+      <option value="two">Two</option>
+      <option value="four">Four</option>
+      <option value="still learning how to count, apparently">Still learning how to count, apparently</option>
+    </select>
+  </body>
+</html>
