@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Banking Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #333333;
+    }
+    
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #666666;
+      font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 25px;
+      background: url("https://cdn.jsdelivr.net/gh/encharm/Font-Awesome-SVG-PNG@fc47990/white/png/16/chevron-down.png")
+        no-repeat right center;
+      background-size: 16px;
+    }
+    
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .summary {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .summary-heading {
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 8px;
+      border: 1px solid #cccccc;
+    }
+
+    .summary-table th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h1>Banking Form</h1>
+<form id="banking-form" action="#" method="post">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" required>
+
+  <label for="dob">Date of Birth (YYYY-MM-DD):</label>
+  <input type="text" id="dob" name="dob" pattern="\d{4}-\d{2}-\d{2}" required>
+
+  <label for="address">Address:</label>
+  <textarea id="address" name="address" required></textarea>
+
+  <label for="salary">Monthly Salary:</label>
+  <input type="text" id="salary" name="salary" required>
+
+  <label for="account-type">Account Type:</label>
+  <select id="account-type" name="account-type" required>
+    <option value="" selected disabled>Select Account Type</option>
+    <option value="savings">Savings Account</option>
+    <option value="current">Current Account</option>
+    <option value="fixed-deposit">Fixed Deposit</option>
+  </select>
+
+  <label for="occupation">Occupation:</label>
+  <input type="text" id="occupation" name="occupation" required>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
+
+  <label for="phone">Phone Number:</label>
+  <input type="tel" id="phone" name="phone" required>
+
+  <label for="citizenship">Citizenship:</label>
+  <input type="text" id="citizenship" name="citizenship" required>
+
+  <input type="submit" value="Submit">
+
+</form>
+<div id="summary" class="summary">
+  <h2 class="summary-heading">Form Submission Summary:</h2>
+  <table class="summary-table">
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td id="summary-name"></td>
+    </tr>
+    <tr>
+      <td>Age:</td>
+      <td id="summary-age"></td>
+    </tr>
+    <tr>
+      <td>Date of Birth:</td>
+      <td id="summary-dob"></td>
+    </tr>
+    <tr>
+      <td>Address:</td>
+      <td id="summary-address"></td>
+    </tr>
+    <tr>
+      <td>Monthly Salary:</td>
+      <td id="summary-salary"></td>
+    </tr>
+    <tr>
+      <td>Account Type:</td>
+      <td id="summary-account-type"></td>
+    </tr>
+    <tr>
+      <td>Occupation:</td>
+      <td id="summary-occupation"></td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td id="summary-email"></td>
+    </tr>
+    <tr>
+      <td>Phone Number:</td>
+      <td id="summary-phone"></td>
+    </tr>
+    <tr>
+      <td>Citizenship:</td>
+      <td id="summary-citizenship"></td>
+    </tr>
+  </table>
+</div>
+<script>
+    // Get the form element
+    const form = document.getElementById('banking-form');
+
+    // Add form submission event listener
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      // Get form values
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const dob = document.getElementById('dob').value;
+      const address = document.getElementById('address').value;
+      const salary = document.getElementById('salary').value;
+      const accountType = document.getElementById('account-type').value;
+      const occupation = document.getElementById('occupation').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const citizenship = document.getElementById('citizenship').value;
+
+      // Update summary with form values
+
+      document.getElementById('summary-name').textContent = name;
+      document.getElementById('summary-age').textContent = age;
+      document.getElementById('summary-dob').textContent = dob;
+      document.getElementById('summary-address').textContent = address;
+      document.getElementById('summary-salary').textContent = salary;
+      document.getElementById('summary-account-type').textContent = accountType;
+      document.getElementById('summary-occupation').textContent = occupation;
+      document.getElementById('summary-email').textContent = email;
+      document.getElementById('summary-phone').textContent = phone;
+      document.getElementById('summary-citizenship').textContent = citizenship;
+
+      // Show the summary section
+      const summarySection = document.getElementById('summary');
+      summarySection.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
