@@ -157,6 +157,12 @@
             <version>1.5.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.andreinc</groupId>
+            <artifactId>mockneat</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
