@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" data-provider-thread-count="8">
+    <test verbose="1" name="VHIL Automaiton"  parallel="methods">
+        <parameter name="browser" value="chrome"></parameter>
+        <parameter name="url" value="https://www.google.com"></parameter>
+        <classes>
+            <class name="com.vh.auto.team.basics.testng.WeatherTest">
+                <methods>
+                    <include name="weather_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
