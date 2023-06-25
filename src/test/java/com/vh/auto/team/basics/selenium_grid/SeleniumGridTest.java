@@ -98,7 +98,7 @@ public class SeleniumGridTest {
         getDriver().findElement(BACKPACK_BUTTON).click(); // add backpack to cart
         getDriver().findElement(BIKE_LIGHT_BUTTON).click(); // add bike light to cart
         String totalItems = getDriver().findElement(CART_ITEMS).getText().trim();
-        takeScreenshot(browser,"INVENTORY_PAGE");
+        takeScreenshot(browser, "INVENTORY_PAGE");
 
         Assert.assertEquals(totalItems, "2"); // verify items added to cart
     }
@@ -108,13 +108,13 @@ public class SeleniumGridTest {
     public void checkout_test(String browser) {
         getDriver().findElement(SHOPPING_CART_BUTTON).click();
         getDriver().findElement(CHECKOUT_BUTTON).click();
-        takeScreenshot(browser,"CHECKOUT_INFORMATION_PAGE");
+        takeScreenshot(browser, "CHECKOUT_INFORMATION_PAGE");
 
         fillCheckoutInformation("First Name", "John");
         fillCheckoutInformation("Last Name", "Taylor");
         fillCheckoutInformation("Zip/Postal Code", "60611");
         getDriver().findElement(CONTINUE_BUTTON).click();
-        takeScreenshot(browser,"CHECKOUT_OVERVIEW_PAGE");
+        takeScreenshot(browser, "CHECKOUT_OVERVIEW_PAGE");
 
         Assert.assertEquals(getAmountForLabel(".summary_subtotal_label"), "Item total: $39.98");
         Assert.assertEquals(getAmountForLabel(".summary_tax_label"), "Tax: $3.20");
@@ -123,7 +123,7 @@ public class SeleniumGridTest {
 
     @Parameters("browser")
     @Test
-    public void complete_checkout_test(String browser){
+    public void complete_checkout_test(String browser) {
         getDriver().findElement(FINISH_BUTTON).click();
         takeScreenshot(browser, "CHECKOUT_COMPLETE_PAGE");
 
