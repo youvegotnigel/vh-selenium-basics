@@ -47,10 +47,10 @@ public class SeleniumGridTest {
         switch (browser) {
 
             case "chrome":
-                ChromeOptions chromeHeadlessOptions = new ChromeOptions();
-                //chromeHeadlessOptions.addArguments("--headless=new");
-                chromeHeadlessOptions.addArguments("--start-maximized");
-                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeHeadlessOptions);
+                ChromeOptions chromeOptions = new ChromeOptions();
+                //chromeOptions.addArguments("--headless=new");
+                chromeOptions.addArguments("--start-maximized");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 break;
 
             case "firefox":
