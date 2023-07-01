@@ -41,7 +41,7 @@ public class SeleniumGridTest {
     private void setup(String browser) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setPlatform(Platform.LINUX);
+        capabilities.setPlatform(Platform.ANY);
         capabilities.setBrowserName(browser); //MicrosoftEdge, chrome, firefox
 
         switch (browser) {
