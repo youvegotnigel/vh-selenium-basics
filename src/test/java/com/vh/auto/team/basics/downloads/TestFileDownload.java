@@ -40,11 +40,10 @@ public class TestFileDownload {
     @BeforeTest
     public void setup() throws MalformedURLException, InterruptedException {
 
-        BrowserType browserType = BrowserType.FIREFOX;
+        BrowserType browserType = BrowserType.CHROME;
         driver.set(new RemoteWebDriver(new URL(REMOTE_URL), getDesiredCapabilities(browserType)));
         getDriver().navigate().to(PDF_URL);
-        Thread.sleep(5000);
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        Thread.sleep(5000); // wait for file download
     }
 
     @Test
