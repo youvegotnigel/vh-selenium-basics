@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestFileDownload {
@@ -40,7 +40,7 @@ public class TestFileDownload {
     @BeforeTest
     public void setup() throws MalformedURLException, InterruptedException {
 
-        BrowserType browserType = BrowserType.CHROME;
+        BrowserType browserType = BrowserType.FIREFOX;
         driver.set(new RemoteWebDriver(new URL(REMOTE_URL), getDesiredCapabilities(browserType)));
         getDriver().navigate().to(PDF_URL);
         Thread.sleep(5000);
@@ -110,7 +110,7 @@ public class TestFileDownload {
     private static ChromeOptions createChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
         options.setExperimentalOption("prefs", createChromePreferences());
         return options;
     }
@@ -120,14 +120,14 @@ public class TestFileDownload {
         options.addArguments("--headless=new");
         options.addArguments("--start-maximized");
         options.setExperimentalOption("prefs", createChromePreferences());
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
         return options;
     }
 
     private static EdgeOptions createEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--start-maximized");
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
         options.setExperimentalOption("prefs", createEdgePreferences());
         return options;
     }
