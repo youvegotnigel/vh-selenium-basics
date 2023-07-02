@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Cross Browser Parallel Testing" parallel="tests" thread-count="3">
+
+    <test name="Test on Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
+                <methods>
+                    <include name="login_test"/>
+                    <include name="add_to_cart_test"/>
+                    <include name="checkout_test"/>
+                    <include name="complete_checkout_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test on Edge">
+        <parameter name="browser" value="MicrosoftEdge"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
+                <methods>
+                    <include name="login_test"/>
+                    <include name="add_to_cart_test"/>
+                    <include name="checkout_test"/>
+                    <include name="complete_checkout_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test on Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
+                <methods>
+                    <include name="login_test"/>
+                    <include name="add_to_cart_test"/>
+                    <include name="checkout_test"/>
+                    <include name="complete_checkout_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

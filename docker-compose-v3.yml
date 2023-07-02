@@ -1,0 +1,64 @@
+# To execute this docker-compose yml file use `docker compose -f docker-compose-v3.yml up`
+# Add the `-d` flag at the end for detached execution
+# To stop the execution, hit Ctrl+C, and then `docker compose -f docker-compose-v3.yml down`
+
+# If you want to scale up chrome services by 4 more `docker compose -f docker-compose-v3.yml up --scale chrome=4
+
+# To view live execution of tests in your browser connect to the containers as below for Chrome, Edge and FireFox
+# http://localhost:7900/?autoconnect=1&resize=scale&password=secret
+# http://localhost:7901/?autoconnect=1&resize=scale&password=secret
+# http://localhost:7902/?autoconnect=1&resize=scale&password=secret
+version: "3"
+services:
+  chrome:
+    image: selenium/node-chrome:4.10.0-20230607
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    volumes:
+      - ./downloads:/home/seluser/Downloads
+    ports:
+      - "7900:7900"
+
+  edge:
+    image: selenium/node-edge:4.10.0-20230607
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    volumes:
+      - ./downloads:/home/seluser/Downloads
+    ports:
+      - "7901:7900"
+
+  firefox:
+    image: selenium/node-firefox:4.10.0-20230607
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    volumes:
+      - ./downloads:/home/seluser/Downloads
+    ports:
+      - "7902:7900"
+
+  selenium-hub:
+    image: selenium/hub:4.10.0-20230607
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"

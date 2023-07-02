@@ -1,28 +1,24 @@
 package com.vh.auto.team.basics.downloads;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.io.FilenameUtils;
-import org.openqa.selenium.By;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestFileDownload {
@@ -32,293 +28,149 @@ public class TestFileDownload {
         CHROME_HEADLESS,
         FIREFOX,
         FIREFOX_HEADLESS,
-        EDGE,
-        EDGE_HEADLESS,
+        EDGE
     }
 
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final String PDF_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
+    public static final String FILE_DOWNLOAD_DIRECTORY = System.getProperty("user.dir") + "\\downloads";
+    private static final String REMOTE_URL = "http://localhost:4444";
 
 
-    private WebDriver driver;
-    private static final String LOGIN_URL = "http://mcap_auto.vh.local/";
-    private static final String FILE_DOWNLOAD_PATH = "C:\\mcap_downloads";
-    private By username = By.cssSelector("#login_username");
-    private By password = By.cssSelector("#login_password");
-    private By login_btn = By.cssSelector(".submit.login");
+    @BeforeTest
+    public void setup() throws MalformedURLException, InterruptedException {
 
-
-    @BeforeClass
-    public void setup(){
-
-        BrowserType browserType = BrowserType.CHROME_HEADLESS;
-        Map<String, Object> prefs = new HashMap<>();
-
-        switch (browserType){
-
-            case CHROME:
-                WebDriverManager.chromedriver().setup();
-                prefs.put("download.default_directory", FILE_DOWNLOAD_PATH);
-                prefs.put("download.prompt_for_download", false);
-                prefs.put("download.open_pdf_in_system_reader", false);
-                prefs.put("plugins.always_open_pdf_externally", true);
-
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--remote-allow-origins=*");
-                chromeOptions.addArguments("--disable-extensions");
-                chromeOptions.addArguments("--disable-popup-blocking");
-                chromeOptions.addArguments("--disable-infobars");
-                chromeOptions.addArguments("--plugins-disabled");
-                chromeOptions.addArguments("--window-size=1920,1080");
-                chromeOptions.setExperimentalOption("prefs", prefs);
-
-                driver = new ChromeDriver(chromeOptions);
-                break;
-
-            case CHROME_HEADLESS:
-                WebDriverManager.chromedriver().setup();
-                prefs.put("download.default_directory", FILE_DOWNLOAD_PATH);
-                prefs.put("download.prompt_for_download", false);
-                prefs.put("download.open_pdf_in_system_reader", false);
-                prefs.put("plugins.always_open_pdf_externally", true);
-
-                ChromeOptions chromeHeadlessOptions = new ChromeOptions();
-                chromeHeadlessOptions.addArguments("--remote-allow-origins=*");
-                chromeHeadlessOptions.addArguments("--disable-extensions");
-                chromeHeadlessOptions.addArguments("--disable-popup-blocking");
-                chromeHeadlessOptions.addArguments("--disable-infobars");
-                chromeHeadlessOptions.addArguments("--plugins-disabled");
-                chromeHeadlessOptions.setExperimentalOption("prefs", prefs);
-                chromeHeadlessOptions.addArguments("--headless=new");
-
-                driver = new ChromeDriver(chromeHeadlessOptions);
-                break;
-
-            case EDGE:
-                WebDriverManager.edgedriver().setup();
-                prefs.put("download.default_directory", FILE_DOWNLOAD_PATH);
-                prefs.put("download.prompt_for_download", false);
-                prefs.put("download.open_pdf_in_system_reader", false);
-                prefs.put("plugins.always_open_pdf_externally", true);
-
-                EdgeOptions edgeOptions = new EdgeOptions();
-                edgeOptions.addArguments("--disable-extensions");
-                edgeOptions.addArguments("--disable-popup-blocking");
-                edgeOptions.addArguments("--disable-infobars");
-                edgeOptions.addArguments("--plugins-disabled");
-                edgeOptions.setExperimentalOption("prefs", prefs);
-
-                driver = new EdgeDriver(edgeOptions);
-                break;
-
-            case EDGE_HEADLESS:
-                WebDriverManager.edgedriver().setup();
-                prefs.put("download.default_directory", FILE_DOWNLOAD_PATH);
-                prefs.put("download.prompt_for_download", false);
-                prefs.put("download.open_pdf_in_system_reader", false);
-                prefs.put("plugins.always_open_pdf_externally", true);
-
-                EdgeOptions edgeHeadlessOptions = new EdgeOptions();
-                edgeHeadlessOptions.addArguments("--disable-extensions");
-                edgeHeadlessOptions.addArguments("--disable-popup-blocking");
-                edgeHeadlessOptions.addArguments("--disable-infobars");
-                edgeHeadlessOptions.addArguments("--plugins-disabled");
-                edgeHeadlessOptions.setExperimentalOption("prefs", prefs);
-                edgeHeadlessOptions.addArguments("--headless=new");
-
-                driver = new EdgeDriver(edgeHeadlessOptions);
-                break;
-
-            case FIREFOX:
-                WebDriverManager.firefoxdriver().setup();
-                FirefoxProfile profile = new FirefoxProfile();
-                profile.setPreference("browser.download.folderList", 2);
-                profile.setPreference("browser.download.dir", FILE_DOWNLOAD_PATH);
-                profile.setPreference("pdfjs.disabled", true);
-                profile.setPreference("plugin.disable_full_page_plugin_for_types", "application/pdf");
-                profile.setPreference("plugin.always_open_pdf_externally", true);
-
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.setProfile(profile);
-
-                driver = new FirefoxDriver(firefoxOptions);
-                break;
-
-            case FIREFOX_HEADLESS:
-                WebDriverManager.firefoxdriver().setup();
-                FirefoxProfile headlessProfile = new FirefoxProfile();
-                headlessProfile.setPreference("browser.download.folderList", 2);
-                headlessProfile.setPreference("browser.download.dir", FILE_DOWNLOAD_PATH);
-                headlessProfile.setPreference("pdfjs.disabled", true);
-                headlessProfile.setPreference("plugin.disable_full_page_plugin_for_types", "application/pdf");
-                headlessProfile.setPreference("plugin.always_open_pdf_externally", true);
-
-                FirefoxOptions firefoxHeadlessOptions = new FirefoxOptions();
-                firefoxHeadlessOptions.setProfile(headlessProfile);
-                firefoxHeadlessOptions.addArguments("-headless");
-
-                driver = new FirefoxDriver(firefoxHeadlessOptions);
-                break;
-
-            default:
-                throw new IllegalArgumentException("Invalid browser type specified: " + browserType);
-
-        }
-
-
-        driver.get(LOGIN_URL);
-        driver.manage().window().maximize();
-        login();
+        BrowserType browserType = BrowserType.CHROME;
+        driver.set(new RemoteWebDriver(new URL(REMOTE_URL), getDesiredCapabilities(browserType)));
+        getDriver().navigate().to(PDF_URL);
+        Thread.sleep(5000); // wait for file download
     }
-
-    public void login() {
-        driver.findElement(username).sendKeys("Mali");
-        driver.findElement(password).sendKeys("Mali@123");
-        driver.findElement(login_btn).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-        Assert.assertEquals(driver.getTitle(), "Patient Search");
-    }
-
-    public void explicitWaitMethod(By element) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
-    }
-
-    public void wait_for_feedback() {
-        By element = By.cssSelector(".g_feedback");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(element));
-    }
-
-    @AfterClass
-    public void teardown(){
-        driver.quit();
-        clearDirectory(FILE_DOWNLOAD_PATH);
-    }
-
 
     @Test
-    public void test_file_download(){
+    public void read_downloaded_pdf_file_test() throws IOException {
 
-        click_on_link("Report",1);
-        set_radio_button_for("List",1);
-        set_radio_button_for("Inpatients",1);
-        selectByValue("#report_type", "Inpatient Admission Reviews");
-        selectByValue("#date", "Year to date");
+        File file = new File(FILE_DOWNLOAD_DIRECTORY + "\\pdf-sample.pdf");
 
-        driver.findElement(By.xpath("//input[@name='add_filter']")).click();
-        selectByNameAndValue("filter_by[0][field]", "hospital");
-        selectByNameAndValue("filter_by[0][rule]", "=");
-        selectByNameAndValue("filter_by[0][value]", "RV5 - SLP");
+        PDDocument pdfDocument = PDDocument.load(file);
+        String pdfContent = new PDFTextStripper().getText(pdfDocument);
 
-        click_on_span("Report",1);
-        wait_for_feedback();
+        System.out.println("Total number of pages :: " + pdfDocument.getNumberOfPages());
+        System.out.println("PDF Content :: \n" + pdfContent);
+    }
 
-        click_on_link("Export to PDF",1);
+    private static DesiredCapabilities getDesiredCapabilities(BrowserType browserType) {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setPlatform(Platform.ANY);
 
-        System.out.println("FILE IS DOWNLOADING...");
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        switch (browserType) {
+            case FIREFOX:
+                capabilities.setBrowserName("firefox");
+                capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, createFirefoxOptions());
+                break;
+            case FIREFOX_HEADLESS:
+                capabilities.setBrowserName("firefox");
+                capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, createFirefoxHeadlessOptions());
+                break;
+            case CHROME:
+                capabilities.setBrowserName("chrome");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, createChromeOptions());
+                break;
+            case CHROME_HEADLESS:
+                capabilities.setBrowserName("chrome");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, createChromeHeadlessOptions());
+                break;
+            case EDGE:
+                capabilities.setBrowserName("MicrosoftEdge");
+                capabilities.setCapability(EdgeOptions.CAPABILITY, createEdgeOptions());
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Invalid BROWSER_TYPE = %s specified in the conf file", browserType));
         }
-
-
-
-        //Assertion
-        File downloadFolder = new File(FILE_DOWNLOAD_PATH);
-        File[] downloadedFiles = downloadFolder.listFiles();
-
-        // Find the most recently downloaded file in the download folder
-        File latestDownloadedFile = null;
-        long lastModifiedTime = Long.MIN_VALUE;
-        for (File file : downloadedFiles) {
-            if (file.lastModified() > lastModifiedTime) {
-                lastModifiedTime = file.lastModified();
-                latestDownloadedFile = file;
-            }
-        }
-
-        // Validate the file extension
-        String extension = FilenameUtils.getExtension(latestDownloadedFile.getName());
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(extension, "pdf", "File extension is not matching with expected extension.");
-        softAssert.assertAll();
-
-        // Delete the downloaded file
-        latestDownloadedFile.delete();
-
+        return capabilities;
     }
 
-
-    public void click_on_link(String name, int index){
-
-        String xpath = "(//a[normalize-space()='"+name+"'])["+index+"]";
-        explicitWaitMethod(By.xpath(xpath));
-        driver.findElement(By.xpath(xpath)).click();
+    private static FirefoxOptions createFirefoxOptions() {
+        FirefoxOptions options = new FirefoxOptions();
+        FirefoxProfile profile = createFirefoxProfile();
+        options.setProfile(profile);
+        options.addArguments("--start-maximized");
+        return options;
     }
 
-    public void click_on_span(String name, int index){
-
-        String xpath = "(//span[normalize-space()='"+name+"'])["+index+"]";
-        explicitWaitMethod(By.xpath(xpath));
-        driver.findElement(By.xpath(xpath)).click();
+    private static FirefoxOptions createFirefoxHeadlessOptions() {
+        FirefoxOptions options = new FirefoxOptions();
+        FirefoxProfile profile = createFirefoxProfile();
+        options.setProfile(profile);
+        options.addArguments("-headless");
+        options.addArguments("--start-maximized");
+        return options;
     }
 
-    public void set_radio_button_for(String value, int index){
-
-        String xpath = "(//input[@type='radio' and @value='"+value+"'])["+index+"]";
-        explicitWaitMethod(By.xpath(xpath));
-        driver.findElement(By.xpath(xpath)).click();
+    private static ChromeOptions createChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+        options.setExperimentalOption("prefs", createChromePreferences());
+        return options;
     }
 
-    public void selectByValue(String by, String value) {
-        By dropdown = By.cssSelector(by);
-        explicitWaitMethod(dropdown);
-        Select select = new Select(driver.findElement(dropdown));
-        select.selectByValue(value);
+    private static ChromeOptions createChromeHeadlessOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--start-maximized");
+        options.setExperimentalOption("prefs", createChromePreferences());
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+        return options;
     }
 
-    public void selectByNameAndValue(String name, String value) {
-        String xpath = "(//select[@name='"+name+"'])[1]";
-        By dropdown = By.xpath(xpath);
-        explicitWaitMethod(dropdown);
-        Select select = new Select(driver.findElement(dropdown));
-        select.selectByValue(value);
+    private static EdgeOptions createEdgeOptions() {
+        EdgeOptions options = new EdgeOptions();
+        options.addArguments("--start-maximized");
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+        options.setExperimentalOption("prefs", createEdgePreferences());
+        return options;
     }
 
-    public void set_date_from_calendar(String year, String month, String date, int index) {
-
-        By calendar = By.xpath("(//button[@class='ui-datepicker-trigger'])[" + index + "]");
-
-        explicitWaitMethod(calendar);
-        driver.findElement(calendar).click();
-
-        selectByVisibleText(".ui-datepicker-year", year);
-        selectByVisibleText(".ui-datepicker-Month", month);
-        click_on_normalize_text(date);
+    private static FirefoxProfile createFirefoxProfile() {
+        FirefoxProfile profile = new FirefoxProfile();
+        // Set additional Firefox profile settings if needed
+        profile.setPreference("browser.download.folderList", 2);
+        profile.setPreference("browser.download.dir", FILE_DOWNLOAD_DIRECTORY);
+        profile.setPreference("pdfjs.disabled", true);
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/pdf,application/csv,application/vnd.ms-excel");
+        return profile;
     }
 
-    public void selectByVisibleText(String by, String value) {
-        By dropdown = By.cssSelector(by);
-        explicitWaitMethod(dropdown);
-        Select select = new Select(driver.findElement(dropdown));
-        select.selectByVisibleText(value);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        //Assert.assertEquals(select.getFirstSelectedOption().getText(), value, "Invalid option selected");
+    private static Map<String, Object> createChromePreferences() {
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", FILE_DOWNLOAD_DIRECTORY);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("download.open_pdf_in_system_reader", false);
+        prefs.put("plugins.always_open_pdf_externally", true);
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        return prefs;
     }
 
-    public void click_on_normalize_text(String text) {
-        String xpath = "(//*[normalize-space()='" + text + "'])[1]";
-        By element = By.xpath(xpath);
-        explicitWaitMethod(element);
-        //scroll_to_element_js(element);
-        driver.findElement(element).click();
-        //System.out.println("Clicked on element by xpath ::: " + xpath);
+    private static Map<String, Object> createEdgePreferences() {
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", FILE_DOWNLOAD_DIRECTORY);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("download.open_pdf_in_system_reader", false);
+        prefs.put("plugins.always_open_pdf_externally", true);
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        return prefs;
+    }
+
+    private static WebDriver getDriver() {
+        return driver.get();
+    }
+
+    @AfterTest
+    public void teardown() {
+        getDriver().quit();
+        driver.remove();
     }
 
     private void clearDirectory(String directoryPath) {

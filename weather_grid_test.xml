@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Grid Test Suite" parallel="methods" thread-count="4">
+
+    <test name="Chrome Test">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="url" value="https://www.google.com"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.testng.WeatherGridTest">
+                <methods>
+                    <include name="weather_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+</suite>
