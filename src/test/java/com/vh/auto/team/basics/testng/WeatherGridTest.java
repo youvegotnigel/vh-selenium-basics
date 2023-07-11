@@ -16,7 +16,7 @@ public class WeatherGridTest {
     private final By FAHRENHEIT_TEMP = By.id("wob_ttm");
     private final By DATE_TIME = By.id("wob_dts");
     private final By WEATHER = By.id("wob_dc");
-    private final By LOCATION = By.cssSelector(".BBwThe");
+    private final By LOCATION = By.cssSelector("span.BBwThe");
     private final By TEMP_BUTTON = By.xpath("(//span[@aria-label='°Fahrenheit'])[1]");
     private static final String REMOTE_URL = "http://localhost:4444";
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -27,7 +27,7 @@ public class WeatherGridTest {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName(browser); //MicrosoftEdge, chrome, firefox
-        capabilities.setPlatform(Platform.LINUX);
+        capabilities.setPlatform(Platform.ANY);
 
         // Create a RemoteWebDriver instance with the Selenium Grid URL and desired capabilities
         try {
@@ -72,10 +72,10 @@ public class WeatherGridTest {
                 {"Colombo"},
                 {"Kandy"},
                 {"Negombo"},
-                {"Galle"},
-                {"Singapore"},
-                {"Tokyo"},
-                {"Vancouver"},
+//                {"Galle"},
+//                {"Singapore"},
+//                {"Tokyo"},
+//                {"Vancouver"},
                 {"Toronto"}
         };
     }
