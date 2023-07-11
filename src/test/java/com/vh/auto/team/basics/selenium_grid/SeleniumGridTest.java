@@ -76,6 +76,7 @@ public class SeleniumGridTest {
 
         // Navigate to the login page
         getDriver().get("https://www.saucedemo.com/");
+        getDriver().manage().window().maximize();
 
         // getDriver().manage().window().setSize(new Dimension(1440, 900));
     }
