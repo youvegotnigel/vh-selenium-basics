@@ -36,12 +36,13 @@ public class SeleniumGridTest {
     private static final By FINISH_BUTTON = By.id("finish");
 
 
-    @Parameters("browser")
+    @Parameters({"browser", "browser_version"})
     @BeforeTest
-    private void setup(String browser) {
+    private void setup(String browser, String version) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setPlatform(Platform.ANY);
+        capabilities.setPlatform(Platform.LINUX);
+        capabilities.setVersion(version);
         capabilities.setBrowserName(browser); //MicrosoftEdge, chrome, firefox
 
         switch (browser) {
@@ -76,6 +77,7 @@ public class SeleniumGridTest {
 
         // Navigate to the login page
         getDriver().get("https://www.saucedemo.com/");
+        getDriver().manage().window().maximize();
 
         // getDriver().manage().window().setSize(new Dimension(1440, 900));
     }
