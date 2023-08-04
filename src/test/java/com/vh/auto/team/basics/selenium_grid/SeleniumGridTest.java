@@ -23,7 +23,7 @@ import java.nio.file.Path;
 public class SeleniumGridTest {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private static final String REMOTE_URL = "http://localhost:4444";
+    private static final String REMOTE_URL = "http://13.50.105.164:4444";
     private static final By USERNAME_TEXT_BOX = By.id("user-name");
     private static final By PASSWORD_TEXT_BOX = By.id("password");
     private static final By LOGIN_BUTTON = By.id("login-button");
