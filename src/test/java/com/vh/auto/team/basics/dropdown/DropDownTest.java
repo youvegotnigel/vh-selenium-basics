@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,8 +27,9 @@ public class DropDownTest {
     @BeforeMethod
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setBrowserVersion("stable");
+        driver = new ChromeDriver(chromeOptions);
 
         String filePath = System.getProperty("user.dir") + "/pages/select.html";
         driver.get("file://" + filePath);
