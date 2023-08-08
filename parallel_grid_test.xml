@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Cross Browser Parallel Testing" parallel="tests" thread-count="3">
+<suite name="Cross Browser Parallel Testing" parallel="tests" thread-count="5">
 
-    <test name="Test on Chrome 114">
+    <test name="Test on Chrome Latest">
         <parameter name="browser" value="chrome"/>
-        <parameter name="browser_version" value="114.0"/>
+        <parameter name="browser_version" value="115.0"/>
         <classes>
             <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
                 <methods>
@@ -47,32 +47,34 @@
         </classes>
     </test>
 
-<!--    <test name="Test on Edge">-->
-<!--        <parameter name="browser" value="MicrosoftEdge"/>-->
-<!--        <classes>-->
-<!--            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">-->
-<!--                <methods>-->
-<!--                    <include name="login_test"/>-->
-<!--                    <include name="add_to_cart_test"/>-->
-<!--                    <include name="checkout_test"/>-->
-<!--                    <include name="complete_checkout_test"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Test on Edge Latest">
+        <parameter name="browser" value="MicrosoftEdge"/>
+        <parameter name="browser_version" value="115.0"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
+                <methods>
+                    <include name="login_test"/>
+                    <include name="add_to_cart_test"/>
+                    <include name="checkout_test"/>
+                    <include name="complete_checkout_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
-<!--    <test name="Test on Firefox">-->
-<!--        <parameter name="browser" value="firefox"/>-->
-<!--        <classes>-->
-<!--            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">-->
-<!--                <methods>-->
-<!--                    <include name="login_test"/>-->
-<!--                    <include name="add_to_cart_test"/>-->
-<!--                    <include name="checkout_test"/>-->
-<!--                    <include name="complete_checkout_test"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Test on Firefox Latest">
+        <parameter name="browser" value="firefox"/>
+        <parameter name="browser_version" value="116.0"/>
+        <classes>
+            <class name="com.vh.auto.team.basics.selenium_grid.SeleniumGridTest">
+                <methods>
+                    <include name="login_test"/>
+                    <include name="add_to_cart_test"/>
+                    <include name="checkout_test"/>
+                    <include name="complete_checkout_test"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
 </suite>

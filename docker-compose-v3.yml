@@ -1,8 +1,6 @@
-# To execute this docker-compose yml file use `docker compose -f docker-compose-v3.yml up`
+# To execute this docker-compose yml file use `docker compose -f docker-compose.yml up`
 # Add the `-d` flag at the end for detached execution
-# To stop the execution, hit Ctrl+C, and then `docker compose -f docker-compose-v3.yml down`
-
-# If you want to scale up chrome services by 4 more `docker compose -f docker-compose-v3.yml up --scale chrome=4
+# To stop the execution, hit Ctrl+C, and then `docker compose -f docker-compose.yml down`
 
 # To view live execution of tests in your browser connect to the containers as below for Chrome, Edge and FireFox
 # http://localhost:7900/?autoconnect=1&resize=scale&password=secret
@@ -14,17 +12,42 @@ services:
     image: selenium/node-chrome:latest
     shm_size: 2gb
     depends_on:
-      -
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_INSTANCES=2
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_VNC_NO_PASSWORD=1
+    ports:
+      - "7900:7900"
+
+  chrome_113:
+    image: selenium/node-chrome:113.0
+    shm_size: 2gb
+    depends_on:
       - selenium-hub
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_VNC_NO_PASSWORD=1
-    volumes:
-      - ./downloads:/home/seluser/Downloads
     ports:
-      - "7900:7900"
+      - "7903:7900"
+
+  chrome_110:
+    image: selenium/node-chrome:110.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    ports:
+      - "7904:7900"
 
   edge:
     image: selenium/node-edge:latest
@@ -36,8 +59,6 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_VNC_NO_PASSWORD=1
-    volumes:
-      - ./downloads:/home/seluser/Downloads
     ports:
       - "7901:7900"
 
@@ -51,13 +72,11 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_VNC_NO_PASSWORD=1
-    volumes:
-      - ./downloads:/home/seluser/Downloads
     ports:
       - "7902:7900"
 
   selenium-hub:
-    image: selenium/hub:4.10.0
+    image: selenium/hub:latest
     container_name: selenium-hub
     ports:
       - "4442:4442"
