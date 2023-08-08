@@ -1,3 +1,9 @@
+/**
+ * GRID URL = http://<SERVER_IP>:4444/
+ * VNC URL  = http://<SERVER_IP>:7900/?autoconnect=1&resize=scale&password=secret
+ *
+ */
+
 package com.vh.auto.team.basics.selenium_grid;
 
 import org.apache.commons.io.FileUtils;
@@ -23,7 +29,7 @@ import java.nio.file.Path;
 public class SeleniumGridTest {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private static final String REMOTE_URL = "http://13.50.105.164:4444";
+    private static final String REMOTE_URL = "http://16.16.208.7:4444";
     private static final By USERNAME_TEXT_BOX = By.id("user-name");
     private static final By PASSWORD_TEXT_BOX = By.id("password");
     private static final By LOGIN_BUTTON = By.id("login-button");
