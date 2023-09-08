@@ -1,0 +1,5 @@
+Hello, this is line 1.
+Welcome to the example file.
+This is line 3.
+Feel free to modify this content.
+End of the dummy content.

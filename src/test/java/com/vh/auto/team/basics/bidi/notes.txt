@@ -1,0 +1,9 @@
+https://www.youtube.com/watch?v=kir17acJEq0
+
+https://www.selenium.dev/documentation/webdriver/bidirectional/bidi_api/
+
+https://www.selenium.dev/documentation/webdriver/bidirectional/bidirectional_w3c/
+
+https://github.com/w3c/webdriver-bidi
+
+https://w3c.github.io/webdriver-bidi/#intro
