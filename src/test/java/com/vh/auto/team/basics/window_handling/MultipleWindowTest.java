@@ -17,7 +17,6 @@ public class MultipleWindowTest {
 
     @BeforeClass
     public void setUp () 	{
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
