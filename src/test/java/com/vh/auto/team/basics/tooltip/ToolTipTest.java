@@ -22,7 +22,6 @@ public class ToolTipTest {
     @BeforeClass
     public void setup() {
         driver = new ChromeDriver();
-
         driver.manage().window().maximize();
         driver.get("https://askomdch.com/product/anchor-bracelet/");
     }
