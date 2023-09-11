@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.exceptions;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -19,8 +18,6 @@ public class StaleElementReferenceTest {
 
     @BeforeClass
     public void setup(){
-
-        WebDriverManager.chromedriver().setup();
 
         ChromeOptions chromeOptions = new ChromeOptions();
 

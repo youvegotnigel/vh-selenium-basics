@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.new_features;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,7 +22,7 @@ public class SlowNetworkTest {
 
     @BeforeClass
     public void setUp () {
-        WebDriverManager.chromedriver().setup();
+
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         devTools = driver.getDevTools();

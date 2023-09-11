@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.remotewebdriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +21,6 @@ public class RemoteWebDriverTest {
     @BeforeMethod
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
 
         driver.get("https://www.saucedemo.com/");

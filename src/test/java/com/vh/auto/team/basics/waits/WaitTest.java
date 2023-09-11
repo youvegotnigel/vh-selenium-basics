@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.waits;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -26,7 +25,6 @@ public class WaitTest {
     @BeforeMethod
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--remote-allow-origins=*");

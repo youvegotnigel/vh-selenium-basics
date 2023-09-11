@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.new_features;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -27,7 +26,6 @@ public class ScreenshotTest {
     @BeforeMethod
     public void setUp() {
 
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.amazon.com/");

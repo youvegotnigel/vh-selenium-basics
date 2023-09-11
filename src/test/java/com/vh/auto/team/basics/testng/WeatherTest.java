@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.testng;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,17 +25,14 @@ public class WeatherTest {
 
         switch (browser){
             case "chrome":
-                WebDriverManager.chromedriver().setup();
                 driver.set(ThreadGuard.protect(new ChromeDriver()));
                 break;
 
             case "firefox":
-                WebDriverManager.firefoxdriver().setup();
                 driver.set(ThreadGuard.protect(new FirefoxDriver()));
                 break;
 
             case "edge":
-                WebDriverManager.edgedriver().setup();
                 driver.set(ThreadGuard.protect(new EdgeDriver()));
                 break;
 
