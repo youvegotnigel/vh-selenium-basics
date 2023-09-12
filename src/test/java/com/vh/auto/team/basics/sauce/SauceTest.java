@@ -1,20 +1,25 @@
 package com.vh.auto.team.basics.sauce;
 
+import com.vh.auto.team.basics.listner.ListenerClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 
+@Listeners(ListenerClass.class)
 public class SauceTest {
 
     private static WebDriver driver;
@@ -33,19 +38,22 @@ public class SauceTest {
 
     @BeforeClass
     public void setup() {
-        ChromeOptions opt = new ChromeOptions();
-        driver = new ChromeDriver(opt);
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setBrowserVersion("118");
+        driver = new FirefoxDriver(firefoxOptions);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
     }
 
     @Test(priority = 1)
-    public void login_test() {
+    public void login_test() throws InterruptedException {
         findElement(USERNAME_TEXT_BOX).sendKeys("standard_user");
         findElement(PASSWORD_TEXT_BOX).sendKeys("secret_sauce");
         findElement(LOGIN_BUTTON).click();
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html"); // verify landing page
+
+        Thread.sleep(5000);
     }
 
     @Test(priority = 2)
