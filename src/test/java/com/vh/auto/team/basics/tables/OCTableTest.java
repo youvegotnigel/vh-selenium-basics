@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.tables;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,7 +21,6 @@ public class OCTableTest {
     @BeforeMethod
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("file:///C:/Users/nigel.mulholland/Desktop/oc.html");
         driver.manage().window().maximize();

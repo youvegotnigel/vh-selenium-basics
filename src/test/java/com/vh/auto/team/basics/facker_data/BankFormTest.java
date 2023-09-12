@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.facker_data;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -68,7 +67,6 @@ public class BankFormTest {
     @BeforeClass
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
 
         String filePath = System.getProperty("user.dir") + "/pages/bank-form.html";

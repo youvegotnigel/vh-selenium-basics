@@ -1,6 +1,5 @@
 package com.vh.auto.team.basics.new_features;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -28,7 +27,6 @@ public class GeoLocationTest {
 
     @BeforeClass
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
