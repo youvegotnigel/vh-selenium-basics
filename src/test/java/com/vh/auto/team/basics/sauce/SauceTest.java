@@ -38,9 +38,9 @@ public class SauceTest {
 
     @BeforeClass
     public void setup() {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setBrowserVersion("118");
-        driver = new FirefoxDriver(firefoxOptions);
+        ChromeOptions co = new ChromeOptions();
+        co.setBrowserVersion("stable");
+        driver = new ChromeDriver(co);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
