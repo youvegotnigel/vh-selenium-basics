@@ -34,6 +34,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.titusfortner</groupId>
+            <artifactId>selenium-logger</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
