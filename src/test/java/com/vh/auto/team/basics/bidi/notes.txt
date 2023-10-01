@@ -7,3 +7,13 @@ https://www.selenium.dev/documentation/webdriver/bidirectional/bidirectional_w3c
 https://github.com/w3c/webdriver-bidi
 
 https://w3c.github.io/webdriver-bidi/#intro
+
+###########################################################################
+
+https://www.youtube.com/watch?v=3gDWWsc0h3Y&list=PLRdSclUtJDYXDEsWI0vwBmJxW17NgsaAk&index=10
+
+https://web-platform-tests.org/
+
+https://github.com/web-platform-tests/wpt
+
+https://wpt.fyi/results/webdriver/tests/bidi?label=experimental&label=master&aligned

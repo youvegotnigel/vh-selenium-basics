@@ -6,8 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -38,9 +38,13 @@ public class SauceTest {
 
     @BeforeClass
     public void setup() {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setBrowserVersion("118");
-        driver = new FirefoxDriver(firefoxOptions);
+        ChromeOptions co = new ChromeOptions();
+        co.setBrowserVersion("stable");
+        WebDriver webDriver = new ChromeDriver(co);
+
+        WebDriverListener listener = new ListenerClass();
+        driver = new EventFiringDecorator<>(listener).decorate(webDriver);
+
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
