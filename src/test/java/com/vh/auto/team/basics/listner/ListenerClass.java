@@ -4,6 +4,7 @@ import com.vh.auto.team.basics.sauce.SauceTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.ITestListener;
@@ -67,6 +68,11 @@ public class ListenerClass implements ITestListener, WebDriverListener {
     @Override
     public void afterGetText(WebElement element, String result) {
         System.out.println("### Got text [" + result + "] of element " +element);
+    }
+
+    @Override
+    public void afterFullscreen(WebDriver.Window window) {
+        System.out.println("### Window has been maximized");
     }
 
 
