@@ -40,14 +40,15 @@ public class SauceTest {
     public void setup() {
         ChromeOptions co = new ChromeOptions();
         co.setBrowserVersion("stable");
-        WebDriver webDriver = new ChromeDriver(co);
 
+        WebDriver webDriver = new ChromeDriver(co);
         WebDriverListener listener = new ListenerClass();
         driver = new EventFiringDecorator<>(listener).decorate(webDriver);
 
+        // driver = new ChromeDriver(co);
+
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
-        driver.manage().window().maximize();
     }
 
     @Test(priority = 1)
@@ -57,7 +58,7 @@ public class SauceTest {
         findElement(LOGIN_BUTTON).click();
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html"); // verify landing page
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 
     @Test(priority = 2)
