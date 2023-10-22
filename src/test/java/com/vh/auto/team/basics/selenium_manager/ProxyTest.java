@@ -35,7 +35,7 @@ public class ProxyTest {
         Proxy proxy = new Proxy();
         //proxy.setAutodetect(false);
         //proxy.setHttpProxy("34.82.224.175:33333");
-        proxy.setSslProxy("34.82.224.175:33333");
+        proxy.setSslProxy("51.161.208.144:3128"); // https://www.sslproxies.org/
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setBrowserVersion("stable");
