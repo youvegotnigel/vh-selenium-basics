@@ -42,3 +42,5 @@ test-output/
 testdata/
 reports/
 screenshots/
+zap-modern-report
+*.html
