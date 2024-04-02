@@ -37,7 +37,7 @@ import static org.openqa.selenium.remote.http.HttpMethod.POST;
 public class FileDownloadTest {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private static final String REMOTE_URL = "http://localhost:4444";
+    private static final String REMOTE_URL = "http://10.127.91.203:4444";
     private static final String BROWSER = "chrome"; //MicrosoftEdge, chrome, firefox
     private static final String BROWSER_VERSION = "118.0";
 
@@ -82,7 +82,7 @@ public class FileDownloadTest {
         }
 
         // Navigate to the login page
-        getDriver().get("https://www.selenium.dev/selenium/web/downloads/download.html");
+        getDriver().get("https://the-internet.herokuapp.com/download");
         getDriver().manage().window().maximize();
 
         // getDriver().manage().window().setSize(new Dimension(1440, 900));
@@ -106,11 +106,11 @@ public class FileDownloadTest {
         TimeUnit.SECONDS.sleep(3);
 
         // Download the two available files on the page
-        getDriver().findElement(By.id("file-1")).click();
-        getDriver().findElement(By.id("file-2")).click();
+        getDriver().findElement(By.linkText("code.txt")).click();
+        //getDriver().findElement(By.id("file-2")).click();
 
         // Wait for file to download
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(15);
 
         //This is the endpoint which will provide us with list of files to download and also to
         //let us download a specific file.
@@ -152,6 +152,9 @@ public class FileDownloadTest {
             // filename - This represents the name of the file (same as what was provided by the test)
             // contents - Base64 encoded String which contains the zipped file.
             String zippedContents = value.get("contents").toString();
+
+            String zippedFileNames = value.get("filename").toString();
+            System.out.println("zippedFileNames ::: " + zippedFileNames);
             // The file contents would always be a zip file and has to be unzipped.
             File downloadDir = Zip.unzipToTempDir(zippedContents, "download", "");
             // Read the file contents
