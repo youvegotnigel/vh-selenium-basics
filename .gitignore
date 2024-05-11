@@ -43,4 +43,5 @@ testdata/
 reports/
 screenshots/
 zap-modern-report
-*.html
+pages/.DS_Store
+.DS_Store
