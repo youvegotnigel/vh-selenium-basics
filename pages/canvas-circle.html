@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Test</title>
+    <style>
+        #pieChartCanvas {
+            border: 1px solid black;
+            position: relative;
+        }
+        
+        #tooltip {
+            position: absolute;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pieChartCanvas" width="400" height="400"></canvas>
+    <div id="tooltip"></div>
+
+    <script>
+        // Get the canvas element
+        var canvas = document.getElementById('pieChartCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Data for the pie chart
+        var data = [25, 35, 40];
+        var colors = ['#ff6384', '#36a2eb', '#ffce56'];
+        var englishColors = ['Red', 'Blue', 'Yellow']; // English color names
+        var labels = ['Red', 'Blue', 'Yellow'];
+
+        var total = data.reduce((a, b) => a + b, 0);
+        var startAngle = 0;
+        var endAngle;
+
+        // Draw the pie chart
+        for (var i = 0; i < data.length; i++) {
+            endAngle = startAngle + (Math.PI * 2 * (data[i] / total));
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, canvas.height / 2);
+            ctx.arc(canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) / 3, startAngle, endAngle);
+            ctx.fillStyle = colors[i];
+            ctx.fill();
+            ctx.closePath();
+
+            // Display label
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#000';
+            var midAngle = startAngle + (endAngle - startAngle) / 2;
+            var xPos = canvas.width / 2 + Math.cos(midAngle) * 100;
+            var yPos = canvas.height / 2 + Math.sin(midAngle) * 100;
+            ctx.fillText(labels[i], xPos, yPos);
+
+            startAngle = endAngle;
+        }
+
+        // Create tooltip element
+        var tooltip = document.getElementById('tooltip');
+
+        // Event listener for mousemove to show tooltip
+        canvas.addEventListener('mousemove', function(event) {
+            var rect = canvas.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            var distance = Math.sqrt(Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2));
+
+            if (distance <= Math.min(canvas.width, canvas.height) / 3) {
+                var angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
+                if (angle < 0) {
+                    angle += Math.PI * 2;
+                }
+
+                var tooltipText = '';
+                startAngle = 0;
+                for (var i = 0; i < data.length; i++) {
+                    endAngle = startAngle + (Math.PI * 2 * (data[i] / total));
+                    if (angle >= startAngle && angle <= endAngle) {
+                        tooltipText = englishColors[i] + ' (' + data[i] + '%)'; // Use English color name
+                        break;
+                    }
+                    startAngle = endAngle;
+                }
+
+                // Update tooltip content and position
+                tooltip.textContent = tooltipText;
+                tooltip.style.left = event.pageX + 'px';
+                tooltip.style.top = event.pageY + 'px';
+                tooltip.style.display = 'block';
+            } else {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        // Event listener for mouseout to hide tooltip
+        canvas.addEventListener('mouseout', function() {
+            tooltip.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
