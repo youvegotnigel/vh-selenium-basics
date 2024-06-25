@@ -49,5 +49,6 @@ public class StringTest {
         String specificDateTime = String.format("Specific Date and Time: %tc", specificDate);
         System.out.println(specificDateTime);
 
+        // read more here: https://www.novixys.com/blog/java-string-format-examples/
     }
 }
