@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.events.DomMutationEvent;
-import org.openqa.selenium.devtools.v116.log.Log;
+import org.openqa.selenium.devtools.v115.log.Log;
 import org.openqa.selenium.logging.HasLogEvents;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
