@@ -35,6 +35,8 @@ public class Canvas {
             System.out.println("(" + x + ", " + y + ")");
             actions.moveToElement(element, x, y).perform();
             System.out.println("tool tip text :: " + getToolTipText(By.id("tooltip")));
+            highlightDot(driver, element, x+201, y+201);
+            System.out.println("Highlight coordinate (" + (x+201) + ", " + (y+201) + ")");
         }
     }
 
@@ -55,5 +57,19 @@ public class Canvas {
     }
 
 
+    private void highlightDot(WebDriver driver, WebElement element, int x, int y) {
+        // Execute JavaScript to create and position a dot at the specified coordinates
+        ((JavascriptExecutor) driver).executeScript(
+                "var dot = document.createElement('div');" +
+                        "dot.style.position = 'absolute';" +
+                        "dot.style.top = arguments[1] + 'px';" +
+                        "dot.style.left = arguments[2] + 'px';" +
+                        "dot.style.width = '5px';" + // Adjust size as needed
+                        "dot.style.height = '5px';" + // Adjust size as needed
+                        "dot.style.backgroundColor = 'red';" + // Adjust color as needed
+                        "document.body.appendChild(dot);",
+                element, x, y
+        );
+    }
 
 }
