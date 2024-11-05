@@ -30,7 +30,7 @@ public class BiDiTest {
     public void setup() {
 
         ChromeOptions co = new ChromeOptions();
-        co.setBrowserVersion("stable");
+        co.setBrowserVersion("117.0");
         driver = new ChromeDriver(co);
         driver.manage().window().maximize();
     }
